@@ -1,0 +1,23 @@
+<!-- Страница приложения для сложения -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+Сумма двух чисел
+{% endblock %}
+
+
+{% block body %}
+<h1>Сумма чисел</h1>
+
+    <div class="SumBlock">
+        <form method="post">
+            <input name="a" type="text" placeholder="a">
+            <input name="b" type="text" placeholder="b">
+            <p>Сумма: {{ c }}</p>
+            <input type="submit" value="вычислить">
+        </form>
+    </div>
+
+
+{% endblock %}
