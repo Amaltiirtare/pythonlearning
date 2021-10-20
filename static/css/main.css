@@ -2,9 +2,45 @@ h1 {
     color: blue;
     font-size: 20pt;
     text-align: center;
-    text-transform: uppercase
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 50px;
 }
 
-.SumBlock {
-    background-color: red;
+body {
+    margin: 0;
+    background: #;
+}
+
+.vertical-menu {
+    float: left;
+    width: 200px;
+    min-height: 100vh;
+    background: #eee;
+}
+
+.vertical-menu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc;
+}
+
+.vertical-menu a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.container {
+        margin-left: 200px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        background: #;
 }

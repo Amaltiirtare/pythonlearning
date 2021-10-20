@@ -13,18 +13,18 @@ def index():
 @app.route('/summ', methods=["POST", "GET"])
 def summ():
     if request.method == "GET":
-        return render_template("summ.html", c="Введите значение a и b и нажмите \"Вычислить\"")
+        return render_template("summ.html")
 
     if request.method == "POST":
         a = request.form["a"]
         b = request.form["b"]
-        c = None
         try:
             a, b = int(a), int(b)
-            c = int(a) + int(b)
+            c = a + b
         except:
-            c = "a и b должны быть числами"
-        return render_template("summ.html", c=c)
+            c = "Вы не ввели 2 числа. Повторте попытку."
+
+        return render_template("summ.html", a=a, b=b, c=c)
 
 
 

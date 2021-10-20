@@ -6,16 +6,17 @@
 Сумма двух чисел
 {% endblock %}
 
-
 {% block body %}
 <h1>Сумма чисел</h1>
 
-    <div class="SumBlock">
+    <div>
         <form method="post">
-            <input name="a" type="text" placeholder="a">
-            <input name="b" type="text" placeholder="b">
-            <p>Сумма: {{ c }}</p>
-            <input type="submit" value="вычислить">
+            <input name="a" type="number" placeholder="Введите целое число a" value="{{ a }}">
+            <input name="b" type="number" placeholder="Введите целое число b" value="{{ b }}">
+            <p>Введите значения a и b и нажмите "Вычислить"</p>
+            <p><input type="submit" value="Вычислить"></p>
+            <p>Сумма: <input name="c" value="{{ c }}" size="38"></p>
+            <a href="/summ"><input type="button" value="Очистить"></a>
         </form>
     </div>
 
