@@ -36,12 +36,11 @@ def whatsyourname():
 
     if request.method == "POST":
         username = request.form["username"]
-        hi = "Привет, " + username + "!"
-
-
-#        hi = "Вы ничего не ввели"
-
-    return render_template("whatsyourname.html", username=username, hi=hi)
+        if not username:
+            hi = "Вы ничего не ввели"
+        else:
+            hi = "Привет, " + username + "!"
+        return render_template("whatsyourname.html", username=username, hi=hi)
 
 
 if __name__ == "__main__":
