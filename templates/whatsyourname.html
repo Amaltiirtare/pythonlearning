@@ -1,0 +1,23 @@
+<!-- Как тебя зовут? -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+What is your name
+{% endblock %}
+
+
+{% block body %}
+<h1>Как тебя зовут?</h1>
+
+    <div>
+        <form method="post">
+            Напиши в этом поле, как тебя зовут: <input name="username" type="text" size="40" value="{{ username }}">
+            <input type="submit" value="Готово">
+            <p><output name="result">{{ hi }}</output></p>
+        </form>
+        <a href="/whatsyourname"><input type="button" value="Очистить"></a>
+    </div>
+
+
+{% endblock %}
