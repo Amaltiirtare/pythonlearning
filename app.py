@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-
+# Вычисление суммы двух чисел
 @app.route('/summ', methods=["POST", "GET"])
 def summ():
     if request.method == "GET":
@@ -27,6 +27,21 @@ def summ():
         return render_template("summ.html", a=a, b=b, c=c)
 
 
+# Как тебя зовут?
+@app.route('/whatsyourname', methods=["POST", "GET"])
+def whatsyourname():
+
+    if request.method == "GET":
+        return render_template("whatsyourname.html")
+
+    if request.method == "POST":
+        username = request.form["username"]
+        hi = "Привет, " + username + "!"
+
+
+#        hi = "Вы ничего не ввели"
+
+    return render_template("whatsyourname.html", username=username, hi=hi)
 
 
 if __name__ == "__main__":
