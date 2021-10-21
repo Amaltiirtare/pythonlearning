@@ -43,5 +43,24 @@ def whatsyourname():
         return render_template("whatsyourname.html", username=username, hi=hi)
 
 
+@app.route('/test', methods=["POST", "GET"])
+def test():
+    if request.method == "GET":
+        return render_template("test.html", answer="press the button")
+    if request.method == "POST":
+        answer = "nothing_to show"
+        template = "You pressed "
+        if request.form.get("a"):
+            answer = get_c(template + request.form["a"])
+        elif request.form.get("b"):
+            answer = get_c(template + request.form["b"])
+        return render_template("test.html", answer=answer)
+
+
+def get_c(ans):
+    answer = ans
+    return answer
+
+
 if __name__ == "__main__":
     app.run(debug=True)
