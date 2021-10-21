@@ -17,15 +17,16 @@
     {% endfor %}
 
     {% else %}
-    <p>Еще не было статей</p>
+    <p>Пусто</p>
     {% endif %}
 
 
 <div>
-    <form name="gameadd" method="post">
-        <input name="gamename" type="text" id="gamename" placeholder="Название игры">
-            <input name="gameadd" type="submit" value="Добавить игру">
-            <p>{{ text }}</p>
+    <form method="post">
+        <input name="game_name" type="text" id="game_name" placeholder="Название игры">
+        <input name="game_add" type="submit" value="Добавить игру">
+        <input name="game_delete" type="submit" value="Удалить игру">
+        <p>{{ result }}</p>
     </form>
 </div>
 

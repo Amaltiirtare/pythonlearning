@@ -44,7 +44,7 @@ def summ():
 
 # Как тебя зовут?
 @app.route('/whatsyourname', methods=["POST", "GET"])
-def whatsyourname():
+def what_is_your_name():
 
     if request.method == "GET":
         return render_template("whatsyourname.html")
@@ -60,31 +60,69 @@ def whatsyourname():
 
 # Выбор игры
 @app.route('/gameselection', methods=["POST", "GET"])
-def gamelist():
+def game_selection():
+    """
+    Отображение списка игр
+    """
+    if request.method == "POST":
+        if request.form.get('game_add'):
+            game_name = request.form["game_name"]
+            result = game_add(game_name=game_name)
+            articles = Article.query.all()
+            return render_template("gameselection.html", result=result, articles=articles)
+        elif request.form.get("game_delete"):
+            game_name = request.form["game_name"]
+            result = game_delete(game_name=game_name)
+            articles = Article.query.all()
+            return render_template("gameselection.html", result=result, articles=articles)
+
+    else:
         articles = Article.query.all()
         return render_template("gameselection.html", articles=articles)
 
 
-def gameadd():
-    if request.method == "POST":
-        gamename = request.form['gamename']
+def game_add(game_name):
+    """
+    Ввод данных в БД
+    """
+    if not game_name:
+        return "Вы ничего не ввели"
+    articles = Article.query.all()
+    for el in articles:
+        if game_name == el.gamename:
+            return "Такая игра уже есть в базе"
+    article = Article(gamename=game_name)
 
-        article = Article(gamename=gamename)
-
-        try:
-            db.session.add(article)
-            db.session.commit()
-            text = "Готово"
-            return render_template("gameselection.html", text=text)
-        except:
-            return "При добавлении игры произошла ошибка"
-
-    else:
-        return render_template("gameselection.html")
+    try:
+        db.session.add(article)
+        db.session.commit()
+        result = "Готово"
+    except:
+        result = "При добавлении игры произошла ошибка"
+    return result
 
 
-
-
+def game_delete(game_name):
+    """
+    Удалее данных из БД
+    """
+    if not game_name:
+        return "Вы ничего не ввели"
+    articles = Article.query.all()
+    try:
+        found = False
+        for el in articles:
+            if game_name == el.gamename:
+                found = True
+                db.session.delete(el)
+                db.session.commit()
+        if found:
+            result = "Запись удалена"
+        else:
+            result = "Такой записи нет в базе"
+    except Exception as e:
+        result = f"При удалении игры произошла ошибка: {e}"
+    return result
 
 
 if __name__ == "__main__":
