@@ -41,6 +41,8 @@ def whatsyourname():
         else:
             hi = "Привет, " + username + "!"
         return render_template("whatsyourname.html", username=username, hi=hi)
+
+
 @app.route('/test', methods=["POST", "GET"])
 def test():
     if request.method == "GET":
