@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+import random
 
 
 app = Flask(__name__)
@@ -75,6 +76,10 @@ def game_selection():
             result = game_delete(game_name=game_name)
             articles = Article.query.all()
             return render_template("gameselection.html", result=result, articles=articles)
+        elif request.form.get("game_random"):
+            result_random = game_random()
+            articles = Article.query.all()
+            return render_template("gameselection.html", result_random=result_random, articles=articles)
 
     else:
         articles = Article.query.all()
@@ -121,7 +126,18 @@ def game_delete(game_name):
         else:
             result = "Такой записи нет в базе"
     except Exception as e:
+        # f - форматированная строка. Применяется, когда нужно передать переменную
         result = f"При удалении игры произошла ошибка: {e}"
+    return result
+
+
+def game_random():
+    articles = Article.query.all()
+    # Проверка на вхождение элементов (есть ли хотя бы 1 элемент)
+    if articles:
+        result = random.choice(articles).gamename
+    else:
+        result = "В базе ничего нет"
     return result
 
 
