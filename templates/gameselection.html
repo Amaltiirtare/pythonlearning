@@ -1,0 +1,34 @@
+<!-- Выбираем, в какую игру поиграть-->
+
+{% extends 'base.html' %}
+
+{% block title %}
+Выбор игры
+{% endblock %}
+
+{% block body %}
+    <h1>Выбор игры</h1>
+
+    <p>Список доступных игр: </p>
+
+    {% if articles|length > 0 %}
+    {% for el in articles %}
+        {{ el.gamename }},
+    {% endfor %}
+
+    {% else %}
+    <p>Пусто</p>
+    {% endif %}
+
+
+<div>
+    <form method="post">
+        <input name="game_name" type="text" id="game_name" placeholder="Название игры">
+        <input name="game_add" type="submit" value="Добавить игру">
+        <input name="game_delete" type="submit" value="Удалить игру">
+        <p>{{ result }}</p>
+        <p><input name="game_random" type="submit" value="Во что поиграем?"> ---> {{ result_random }}</p>
+    </form>
+</div>
+
+{%endblock%}
