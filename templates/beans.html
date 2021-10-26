@@ -1,0 +1,31 @@
+<!-- Главная страница. Типа содержание -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+Beans Project
+{% endblock %}
+
+
+{% block body %}
+<h1>Beans Project</h1>
+
+<div>
+    <div id="left_half">
+        {% if beans|length > 0 %}
+        {% for el in beans %}
+        <p>{{ el.date.date() }}, {{ el.count}}, {{ el.description }}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div id="right_half">
+    <form method="post">
+        <h2>Общее количество баллов: {{ summ }}</h2>
+        <p><input type="text" name="description" size="60" placeholder="Описание"></p>
+        <p><input type="number" name="count" size="30" placeholder="Количество фасолек"></p>
+        <p><input type="submit" value="Добавить"></p>
+    </form>
+    </div>
+</div>
+
+{% endblock %}
