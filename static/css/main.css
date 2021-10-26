@@ -44,3 +44,15 @@ body {
         padding-right: 40px;
         background: #;
 }
+
+#left_half {
+    width: 50%;
+    float: left;
+    height: 100%
+}
+
+#right_half {
+    width: 50%;
+    float: left;
+    height: 100%
+}

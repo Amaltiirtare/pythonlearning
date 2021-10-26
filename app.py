@@ -1,21 +1,40 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import random
+from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gamebase.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gamebase.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///beansbase.db'
+app.config['SQLALCHEMY_BINDS'] = {
+    'games': 'sqlite:///gamebase.db',
+    'beans': 'sqlite:///beansbase.db'
+}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-# Работа с базой данных
+# База данных для игр
 class Article(db.Model):
+    __bind_key__ = 'games'
     id = db.Column(db.Integer, primary_key=True)
     gamename = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
         return '<Article %r' % self.id
+
+
+# База данных для Beans_Project
+class BeansBasket(db.Model):
+    __bind_key__ = 'beans'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    description = db.Column(db.String(100), nullable=False)
+    count = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<BeansBasket: {self.id} {self.date} {self.count}'
 
 
 # Показать главную страницу
@@ -158,6 +177,39 @@ def test():
 def get_c(ans):
     answer = ans
     return answer
+
+
+@app.route('/beans', methods=["POST", "GET"])
+def beans_project():
+    if request.method == "POST":
+        description = request.form['description']
+        count = request.form['count']
+
+        beans_basket = BeansBasket(description=description, count=count)
+
+        try:
+            db.session.add(beans_basket)
+            db.session.commit()
+            beans = BeansBasket.query.order_by(BeansBasket.date.desc()).all()
+            filtered_beans = beans[0:10]
+            summ = beans_calculate(beans_list=beans)
+            return render_template("beans.html", beans=filtered_beans, summ=summ)
+        except Exception as e:
+            return f"При добавлении записи произошла ошибка: {e}"
+    else:
+        beans = BeansBasket.query.order_by(BeansBasket.date.desc()).all()
+        filtered_beans = beans[0:10]
+        summ = beans_calculate(beans_list=beans)
+        return render_template("beans.html", beans=filtered_beans, summ=summ)
+
+
+def beans_calculate(beans_list):
+    summ = 0
+    for el in beans_list:
+        summ += el.count
+    return summ
+
+
 
 
 if __name__ == "__main__":
